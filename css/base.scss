@@ -1,0 +1,64 @@
+$n: 40;
+$si: 500px;
+$ti: 1s;
+
+body {
+    background: #212121;
+}
+
+.frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: $si;
+    width: $si;
+    margin: $si*-.5;
+    box-shadow: 0 0 0 1px black;
+    background: white;
+    overflow: hidden;
+}
+
+.circle {
+    height: $si/$n * 1.8;
+    width: $si/$n * 1.8;
+    margin: $si/$n * -.9;
+    border-radius: $si;
+    box-shadow: 0 0 0 1px rgba(100, 100, 100, 0.3);
+}
+
+.circle:before {
+    content: ' ';
+    height: $si * .008;
+    width: $si * .008;
+    border-radius: $si;
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin: $si * -.006;
+}
+
+@for $i from 0 through $n {
+    .row:nth-child(#{$i}) {
+        position: absolute;
+        top: $si/($n - 1) * ($i - 1);
+    }
+
+    .circle:nth-child(#{$i}) {
+        position: absolute;
+        top: 0;
+        left: $si/($n - 1) * ($i - 1);
+    }
+
+    @for $j from 0 through $n {
+
+        .row:nth-child(#{$i}) .circle:nth-child(#{$j}) {
+            animation: rotate $ti ($ti/$n*$i*-1.5) + ($ti/$n*$j*-1.5) linear infinite;
+        }
+    }
+}
+    
+@keyframes rotate {
+    from { transform: rotate(0);}
+    to   { transform: rotate(360deg);}
+}
